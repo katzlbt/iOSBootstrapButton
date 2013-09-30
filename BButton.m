@@ -142,48 +142,7 @@ UIColor* BButton_ColorDanger = nil;
     self.titleLabel.shadowOffset = CGSizeMake(0.0f, -1.0f);
     self.titleLabel.font = [UIFont boldSystemFontOfSize:17.0f];
     [self setType:BButtonTypeDefault];
-    self.shouldShowDisabled = NO;
-}
-
-- (id)initWithFrame:(CGRect)frame type:(BButtonType)type
-{
-    return [self initWithFrame:frame color:[BButton colorForButtonType:type]];
-}
-
-- (id)initWithFrame:(CGRect)frame type:(BButtonType)type icon:(NSString *)iconString fontSize:(CGFloat)fontSize
-{
-    return [self initWithFrame:frame
-                         color:[BButton colorForButtonType:type]
-                          icon:iconString
-                      fontSize:fontSize];
-}
-
-- (id)initWithFrame:(CGRect)frame color:(UIColor *)aColor
-{
-    self = [self initWithFrame:frame];
-    if(self) {
-        self.color = aColor;
-    }
-    return self;
-}
-
-- (id)initWithFrame:(CGRect)frame color:(UIColor *)aColor icon:(NSString *)iconString fontSize:(CGFloat)fontSize
-{
-    self = [self initWithFrame:frame color:aColor];
-    if(self) {
-        UIFont* f = [UIFont fontWithName:BButton_iconFontName size:fontSize];
-        
-#ifdef DEBUG
-        if (f == nil) {
-            NSLog(@"BButton Font '%@' not found! Check if font is in Info.plist.",BButton_iconFontName);
-        }
-#endif
-        
-        self.titleLabel.font = f;
-        self.titleLabel.textAlignment = NSTextAlignmentCenter;
-        [self setTitle:iconString forState:UIControlStateNormal];
-    }
-    return self;
+    self.shouldShowDisabled = YES;
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -211,20 +170,6 @@ UIColor* BButton_ColorDanger = nil;
         [self setup];
     }
     return self;
-}
-
-+ (BButton *)buttonWithOnlyIcon:(NSString *)iconString type:(BButtonType)type
-{
-    return [BButton buttonWithOnlyIcon:iconString
-                                        color:[BButton colorForButtonType:type]];
-}
-
-+ (BButton *)buttonWithOnlyIcon:(NSString *)iconString color:(UIColor *)color
-{
-    return [[BButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 40.0f, 40.0f)
-                                    color:color
-                                     icon:iconString
-                                 fontSize:20.0f];
 }
 
 #pragma mark - Parent overrides
@@ -294,6 +239,21 @@ UIColor* BButton_ColorDanger = nil;
 - (void)setType:(BButtonType)type
 {
     self.color = [BButton colorForButtonType:type];
+}
+
+- (void)setTitle:(NSString*)titleOrIcon withFontSize:(CGFloat)fontSize
+{
+    UIFont* f = [UIFont fontWithName:BButton_iconFontName size:fontSize];
+    
+#ifdef DEBUG
+    if (f == nil) {
+        NSLog(@"BButton Font '%@' not found! Check if font is in Info.plist.",BButton_iconFontName);
+    }
+#endif
+    
+    self.titleLabel.font = f;
+    self.titleLabel.textAlignment = NSTextAlignmentCenter;
+    [self setTitle:titleOrIcon forState:UIControlStateNormal];
 }
 
 - (void)addIcon:(NSString *)iconString beforeTitle:(BOOL)before
@@ -366,7 +326,8 @@ UIColor* BButton_ColorDanger = nil;
     CGFloat shadowBlurRadius = 2.0f;
     
     // Rounded Rectangle Drawing
-    UIBezierPath *roundedRectanglePath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0.5f, 0.5f, rect.size.width-1.0f, rect.size.height-1.0f)
+    UIBezierPath *roundedRectanglePath = [UIBezierPath bezierPathWithRoundedRect:
+                                          CGRectMake(0.5f, 0.5f, rect.size.width-1.0f, rect.size.height-1.0f)
                                                                     cornerRadius:6.0f];
     
     CGContextSaveGState(context);
@@ -425,6 +386,8 @@ UIColor* BButton_ColorDanger = nil;
     CGColorSpaceRelease(colorSpace);
 }
 
+/** Create a brighter color from a darker color.
+    Classmethods help to simplyfy compiling with ARC, (less files) */
 + (UIColor *)lightenColor:(UIColor*)c withValue:(CGFloat)value
 {
     int totalComponents = CGColorGetNumberOfComponents(c.CGColor);

@@ -81,31 +81,26 @@ void BButton_listFonts(); // Add yourfont.ttf to application-info.plist with key
 
 @property (strong, nonatomic) UIColor *color; // can be set in InterfaceBuilder as User defined Attribute color of Type UIColor
 @property (assign, nonatomic) BOOL shouldShowDisabled;
+@property (strong, nonatomic) NSString* iconString;
 
 + (void) setIconFontName:(NSString*)fontName; // ADD the TTF file to your Info.plist!
 + (void) setSpacerStringBeforeIcon:(NSString*)before andAfterIcon:(NSString*)after; // ADD the TTF file to your Info.plist!
 
-/** Set automatic translation of label text to icons.
+/** Set automatic translation of label text (as set in InterfaceBuilder) to icons.
  Example:
  + inizialize //(E.g. App Delegate or any other main class)
  {
- [BButton setTextToIconMap:[NSDictionary dictionaryWithObjectsAndKeys: FAIconRemove, "#IL1", nil]];
+ [BButton setTextToIconMap:[NSDictionary dictionaryWithObjectsAndKeys: FAIconRemove, "#FAIconRemove#", nil]];
  }
  */
 + (void) setTextToIconMap:(NSDictionary*)map;
 
 #pragma mark - Initialization
-- (id)initWithFrame:(CGRect)frame type:(BButtonType)type;
-- (id)initWithFrame:(CGRect)frame type:(BButtonType)type icon:(NSString *)iconString fontSize:(CGFloat)fontSize;
-
-- (id)initWithFrame:(CGRect)frame color:(UIColor *)aColor;
-- (id)initWithFrame:(CGRect)frame color:(UIColor *)aColor icon:(NSString *)iconString fontSize:(CGFloat)fontSize;
-
-+ (BButton *)buttonWithOnlyIcon:(NSString *)iconString type:(BButtonType)type;
-+ (BButton *)buttonWithOnlyIcon:(NSString *)iconString color:(UIColor *)color;
+- (id)initWithFrame:(CGRect)frame;
 
 #pragma mark - BButton
 - (void)setType:(BButtonType)type;
+- (void)setTitle:(NSString*)titleOrIcon withFontSize:(CGFloat)fontSize;
 - (void)addIcon:(NSString *)iconString beforeTitle:(BOOL)before;
 
 + (UIColor*)colorPrimary;

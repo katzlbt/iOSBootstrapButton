@@ -12,14 +12,15 @@
  */
 @interface BBIconLabel : UILabel
 
-+ (void) setIconFontName:(NSString*)fontName; // ADD the TTF file to your Info.plist!
++ (void) setIconFontName:(NSString*)fontName; // DO NOT FORGET TO ADD the TTF file to your Info.plist!
 + (void) setPadding:(unsigned int)padding;    // change the default border padding of 4 (reduces font size of icon font)
 
-/** Set automatic translation of label text to icons.
+/** Set automatic translation of label text (when setText is used) to icons.
+    This allows setting an icon in InterfaceBuilder with little effort, by just setting the text.
  Example:
  + inizialize //(E.g. App Delegate or any other main class)
  {
-    [BBIconLabel setTextToIconMap:[NSDictionary dictionaryWithObjectsAndKeys: FAIconRemove, "#IL1", nil]];
+    [BBIconLabel setTextToIconMap:[NSDictionary dictionaryWithObjectsAndKeys: FAIconRemove, "#FAIconRemove#", nil]];
  }
  */
 + (void) setTextToIconMap:(NSDictionary*)map;

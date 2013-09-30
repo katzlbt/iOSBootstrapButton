@@ -15,7 +15,7 @@ unsigned int BBIconLabel_padding = 4;
 
 @implementation BBIconLabel
 
-+ (void) setTextToIconMap:(NSDictionary*)map
++ (void) setTextToIconMap:(NSDictionary*)map // translation of setText text to icon
 {
     BBIconLabel_textToIconsMap = map;    
 }
