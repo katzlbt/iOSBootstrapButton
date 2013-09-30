@@ -36,7 +36,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UIColor+BButton.h"
 
 typedef enum {
     BButtonTypeDefault = 1,

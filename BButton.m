@@ -38,6 +38,10 @@
 #import "BButton.h"
 #import <CoreGraphics/CoreGraphics.h>
 
+#if ! __has_feature(objc_arc)
+#warning This file must be compiled with automatic reference counting or it will crash your App. Use -fobjc-arc flag on the single file (or convert your project to ARC).
+#endif
+
 //NSString* BButton_iconFontName = @"icomoon";
 NSString* BButton_iconFontName = @"FontAwesome";
 NSString* BButton_spaceBeforeIcon = @" ";
@@ -137,8 +141,8 @@ UIColor* BButton_ColorDanger = nil;
     self.backgroundColor = [UIColor clearColor];
     self.titleLabel.shadowOffset = CGSizeMake(0.0f, -1.0f);
     self.titleLabel.font = [UIFont boldSystemFontOfSize:17.0f];
-    self.shouldShowDisabled = NO;
     [self setType:BButtonTypeDefault];
+    self.shouldShowDisabled = NO;
 }
 
 - (id)initWithFrame:(CGRect)frame type:(BButtonType)type
@@ -245,7 +249,7 @@ UIColor* BButton_ColorDanger = nil;
 {
     color = newColor;
     
-    if([newColor isLightColor]) {
+    if([[self class] isLightColor:newColor]) {
         [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [self setTitleShadowColor:[[UIColor whiteColor] colorWithAlphaComponent:0.6f] forState:UIControlStateNormal];
         
@@ -273,13 +277,13 @@ UIColor* BButton_ColorDanger = nil;
     shouldShowDisabled = show;
     
     if(show) {
-        if([self.color isLightColor])
+        if([[self class] isLightColor:self.color])
             [self setTitleColor:[UIColor colorWithWhite:0.4f alpha:0.5f] forState:UIControlStateDisabled];
         else
             [self setTitleColor:[UIColor colorWithWhite:1.0f alpha:0.5f] forState:UIControlStateDisabled];
     }
     else {
-        if([self.color isLightColor])
+        if([[self class] isLightColor:self.color])
             [self setTitleColor:[UIColor blackColor] forState:UIControlStateDisabled];
         else
             [self setTitleColor:[UIColor whiteColor] forState:UIControlStateDisabled];
@@ -354,10 +358,10 @@ UIColor* BButton_ColorDanger = nil;
     }
 #endif
     
-    UIColor *border = [self.color darkenColorWithValue:0.06f];
+    UIColor *border = [[self class] darkenColor:self.color withValue:0.06f];
     
     // Shadow Declarations
-    UIColor *shadow = [self.color lightenColorWithValue:0.50f];
+    UIColor *shadow = [[self class]  lightenColor:self.color withValue:0.50f];
     CGSize shadowOffset = CGSizeMake(0.0f, 1.0f);
     CGFloat shadowBlurRadius = 2.0f;
     
@@ -412,13 +416,93 @@ UIColor* BButton_ColorDanger = nil;
 - (void)setGradientEnabled:(BOOL)enabled
 {
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    UIColor *topColor = enabled ? [self.color lightenColorWithValue:0.12f] : [self.color darkenColorWithValue:0.12f];
+    UIColor *topColor = enabled ? [[self class] lightenColor:self.color withValue:0.12f] : [[self class]  darkenColor:self.color withValue:0.12f];
     
     NSArray *newGradientColors = [NSArray arrayWithObjects:(id)topColor.CGColor, (id)self.color.CGColor, nil];
     CGFloat newGradientLocations[] = {0.0f, 1.0f};
     
     gradient = CGGradientCreateWithColors(colorSpace, (__bridge CFArrayRef)newGradientColors, newGradientLocations);
     CGColorSpaceRelease(colorSpace);
+}
+
++ (UIColor *)lightenColor:(UIColor*)c withValue:(CGFloat)value
+{
+    int totalComponents = CGColorGetNumberOfComponents(c.CGColor);
+    BOOL isGreyscale = (totalComponents == 2) ? YES : NO;
+    
+    CGFloat *oldComponents = (CGFloat *)CGColorGetComponents(c.CGColor);
+    CGFloat newComponents[4];
+    
+    if(isGreyscale) {
+        newComponents[0] = oldComponents[0] + value > 1.0 ? 1.0 : oldComponents[0] + value;
+        newComponents[1] = oldComponents[0] + value > 1.0 ? 1.0 : oldComponents[0] + value;
+        newComponents[2] = oldComponents[0] + value > 1.0 ? 1.0 : oldComponents[0] + value;
+        newComponents[3] = oldComponents[1];
+    }
+    else {
+        newComponents[0] = oldComponents[0] + value > 1.0 ? 1.0 : oldComponents[0] + value;
+        newComponents[1] = oldComponents[1] + value > 1.0 ? 1.0 : oldComponents[1] + value;
+        newComponents[2] = oldComponents[2] + value > 1.0 ? 1.0 : oldComponents[2] + value;
+        newComponents[3] = oldComponents[3];
+    }
+    
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+	CGColorRef newColor = CGColorCreate(colorSpace, newComponents);
+	CGColorSpaceRelease(colorSpace);
+    
+	UIColor *retColor = [UIColor colorWithCGColor:newColor];
+	CGColorRelease(newColor);
+    
+    return retColor;
+}
+
++ (UIColor *)darkenColor:(UIColor*)c withValue:(CGFloat)value
+{
+    int totalComponents = CGColorGetNumberOfComponents(c.CGColor);
+    BOOL isGreyscale = (totalComponents == 2) ? YES : NO;
+    
+    CGFloat *oldComponents = (CGFloat *)CGColorGetComponents(c.CGColor);
+    CGFloat newComponents[4];
+    
+    if(isGreyscale) {
+        newComponents[0] = oldComponents[0] - value < 0.0 ? 0.0 : oldComponents[0] - value;
+        newComponents[1] = oldComponents[0] - value < 0.0 ? 0.0 : oldComponents[0] - value;
+        newComponents[2] = oldComponents[0] - value < 0.0 ? 0.0 : oldComponents[0] - value;
+        newComponents[3] = oldComponents[1];
+    }
+    else {
+        newComponents[0] = oldComponents[0] - value < 0.0 ? 0.0 : oldComponents[0] - value;
+        newComponents[1] = oldComponents[1] - value < 0.0 ? 0.0 : oldComponents[1] - value;
+        newComponents[2] = oldComponents[2] - value < 0.0 ? 0.0 : oldComponents[2] - value;
+        newComponents[3] = oldComponents[3];
+    }
+    
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+	CGColorRef newColor = CGColorCreate(colorSpace, newComponents);
+	//CGColorSpaceRelease(colorSpace);
+    
+	UIColor *retColor = [UIColor colorWithCGColor:newColor];
+	//CGColorRelease(newColor);
+    
+    return retColor;
+}
+
++ (BOOL)isLightColor:(UIColor*)c
+{
+    int totalComponents = CGColorGetNumberOfComponents(c.CGColor);
+    BOOL isGreyscale = (totalComponents == 2) ? YES : NO;
+    
+    CGFloat *components = (CGFloat *)CGColorGetComponents(c.CGColor);
+    CGFloat sum;
+    
+    if(isGreyscale) {
+        sum = components[0];
+    }
+    else {
+        sum = (components[0] + components[1] + components[2]) / 3.0f;
+    }
+    
+    return (sum > 0.8f);
 }
 
 @end
