@@ -2,6 +2,18 @@
 
 BButton is a subclass of UIButton that looks like the [Twitter Bootstrap 2.3.1](http://twitter.github.com/bootstrap) buttons.
 BBIconLabel is a new class to display Icons without button. With a single method call it can be set up to convert entered text in InterfaceBuilder to Icons and scale them. No need to write code.
+For a working demo see this project: git@github.com:katzlbt/iOSBootstrapButtonDemo.git
+iOS7 compatible for those who do not like the new iOS7 design. 
+
+#Adding BootstrapButton to your project
+
+git submodule add git@github.com:katzlbt/iOSBootstrapButton.git BootstrapButton
+XCode5 will ask you "Share working copy?" Answer: NO (not sure what this means though)
+
+#Using BootstrapButton in your project
+
+In InterfaceBuilder change the class-name of your Button from UIButton to BButton. That's it.
+To programatically use the buttons check out the demo XCode project git@github.com:katzlbt/iOSBootstrapButtonDemo.git
 
 ### Changes
 * Refactored to be able to use Icomoon Font or any other Font in Buttons.
@@ -10,9 +22,7 @@ BBIconLabel is a new class to display Icons without button. With a single method
 * TODO: Draw icon separately of text as this thinns the label font from bold to regular (and loose the ability to display 2+ icons?)
 * Addedd BBIconLabel class
 
-#BButton 2.0
-
-BButton is a subclass of UIButton that looks like the [Twitter Bootstrap 2.3.1](http://twitter.github.com/bootstrap) buttons.
+#Original README BButton
 
 Refactored by [@jessesquires](http://github.com/jessesquires), April 2013.
 
@@ -68,7 +78,7 @@ Create a `UILabel` and change its class to `BBIconLabel` Then add a method to tr
 
 [MIT License](http://opensource.org/licenses/MIT)
 
-Copyright (c) 2013 Mathieu Bolard
+Copyright (c) 2013 Mathieu Bolard and others
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -99,7 +109,7 @@ THE SOFTWARE.
 [img1]:https://raw.github.com/mattlawer/BButton/master/Screenshots/screenshot-1.png
 [img2]:https://raw.github.com/mattlawer/BButton/master/Screenshots/screenshot-2.png
 
-##Contact
+##Contact (ORIGINAL AUTHOR)
 
 mattlawer08@gmail.com<br />
 http://mathieubolard.com<br />
