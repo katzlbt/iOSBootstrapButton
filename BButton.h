@@ -71,6 +71,10 @@ extern UIColor* BButton_ColorDanger;
 
  Assumptions: You use only one icon font.
   [BButton setIconFontName:@"icomoon"];
+ 
+ This class is still a hack as it does not draw the icon separately of the title text.
+ Setting the title will replace the icon, icon and title font are related (no bold!) etc. 
+ Probably we can live with that.
 */
 
 #ifdef DEBUG
@@ -81,7 +85,7 @@ void BButton_listFonts(); // Add yourfont.ttf to application-info.plist with key
 
 @property (strong, nonatomic) UIColor *color; // can be set in InterfaceBuilder as User defined Attribute color of Type UIColor
 @property (assign, nonatomic) BOOL shouldShowDisabled;
-@property (strong, nonatomic) NSString* iconString;
+// TODO ... @property (strong, nonatomic) NSString* iconString;
 
 + (void) setIconFontName:(NSString*)fontName; // ADD the TTF file to your Info.plist!
 + (void) setSpacerStringBeforeIcon:(NSString*)before andAfterIcon:(NSString*)after; // ADD the TTF file to your Info.plist!
