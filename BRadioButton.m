@@ -18,6 +18,10 @@
 
 #import "BRadioButton.h"
 
+#if ! __has_feature(objc_arc)
+#warning This file must be compiled with automatic reference counting or it will crash your App. Use -fobjc-arc flag on the single file (or convert your project to ARC).
+#endif
+
 @implementation BRadioButton
 
 - (void)awakeFromNib
