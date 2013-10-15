@@ -73,8 +73,15 @@ extern UIColor* BButton_ColorDanger;
   [BButton setIconFontName:@"icomoon"];
  
  This class is still a hack as it does not draw the icon separately of the title text.
+ The iconfont's space may interfere also with spaces in the text (use quarterspaces etc to get pretty results).
  Setting the title will replace the icon, icon and title font are related (no bold!) etc. 
- Probably we can live with that.
+ Probably we can live with that. Probably we should fix it to draw in a square area.
+ 
+ If you want to customize further (icon+text+icon, etc.) try the raw set title method via UIControl:
+ - setTitle:
+    self.titleLabel.font = yourFont;
+    self.titleLabel.textAlignment = NSTextAlignmentCenter;
+    [self setTitle:titleOrIconOrBoth forState:UIControlStateNormal];
 */
 
 #ifdef DEBUG
@@ -88,7 +95,10 @@ void BButton_listFonts(); // Add yourfont.ttf to application-info.plist with key
 // TODO ... @property (strong, nonatomic) NSString* iconString;
 
 + (void) setIconFontName:(NSString*)fontName; // ADD the TTF file to your Info.plist!
-+ (void) setSpacerStringBeforeIcon:(NSString*)before andAfterIcon:(NSString*)after; // ADD the TTF file to your Info.plist!
++ (void) setSpacerStringBeforeIcon:(NSString*)before andAfterIcon:(NSString*)after;
+    // <<< This method adjusts the space between icon and title, I recommend using either icon OR text.
+    // this is the "thin-space" fix for an incompatible very wide whitespace %20 char in icomoon.
+    // [BButton setSpacerStringBeforeIcon:@"\u2004\u2004" andAfterIcon:@"\u2009"]; // try also \u2003, \u2004, ... \u2009
 
 /** Set automatic translation of label text (as set in InterfaceBuilder) to icons.
  Example:
@@ -99,13 +109,12 @@ void BButton_listFonts(); // Add yourfont.ttf to application-info.plist with key
  */
 + (void) setTextToIconMap:(NSDictionary*)map;
 
-#pragma mark - Initialization
 - (id)initWithFrame:(CGRect)frame;
 
-#pragma mark - BButton
 - (void)setType:(BButtonType)type;
 - (void)setTitle:(NSString*)titleOrIcon withFontSize:(CGFloat)fontSize;
 - (void)addIcon:(NSString *)iconString beforeTitle:(BOOL)before;
+  // ===> [self setTitle:[NSString stringWithFormat:@"%@%@%@", iconString, BButton_spaceAfterIcon, self.titleLabel.text]
 
 + (UIColor*)colorPrimary;
 + (UIColor*)colorDefault;
