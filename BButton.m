@@ -325,6 +325,8 @@ UIColor* BButton_ColorDanger = nil;
     CGSize shadowOffset = CGSizeMake(0.0f, 1.0f);
     CGFloat shadowBlurRadius = 2.0f;
     
+    BOOL highlight = self.highlighted || self.selected;
+    
     // Rounded Rectangle Drawing
     UIBezierPath *roundedRectanglePath = [UIBezierPath bezierPathWithRoundedRect:
                                           CGRectMake(0.5f, 0.5f, rect.size.width-1.0f, rect.size.height-1.0f)
@@ -336,12 +338,12 @@ UIColor* BButton_ColorDanger = nil;
     
     CGContextDrawLinearGradient(context,
                                 self.gradient,
-                                CGPointMake(0.0f, self.highlighted ? rect.size.height - 0.5f : 0.5f),
-                                CGPointMake(0.0f, self.highlighted ? 0.5f : rect.size.height - 0.5f), 0.0f);
+                                CGPointMake(0.0f, highlight ? rect.size.height - 0.5f : 0.5f),
+                                CGPointMake(0.0f, highlight ? 0.5f : rect.size.height - 0.5f), 0.0f);
     
     CGContextRestoreGState(context);
     
-    if(!self.highlighted) {
+    if(!highlight) {
         // Rounded Rectangle Inner Shadow
         CGRect roundedRectangleBorderRect = CGRectInset([roundedRectanglePath bounds], -shadowBlurRadius, -shadowBlurRadius);
         roundedRectangleBorderRect = CGRectOffset(roundedRectangleBorderRect, -shadowOffset.width, -shadowOffset.height);
@@ -377,7 +379,7 @@ UIColor* BButton_ColorDanger = nil;
 - (void)setGradientEnabled:(BOOL)enabled
 {
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    UIColor *topColor = enabled ? [[self class] lightenColor:self.color withValue:0.12f] : [[self class]  darkenColor:self.color withValue:0.12f];
+    UIColor *topColor = enabled ? [[self class] lightenColor:self.color withValue:0.22f] : [[self class]  darkenColor:self.color withValue:0.22f];
     
     NSArray *newGradientColors = [NSArray arrayWithObjects:(id)topColor.CGColor, (id)self.color.CGColor, nil];
     CGFloat newGradientLocations[] = {0.0f, 1.0f};
