@@ -20,6 +20,12 @@
 
 @implementation BRadioButton
 
+- (void)awakeFromNib
+{
+    if(self.selectedColor == nil) // use key value coding in storyboard to set this color!
+        self.selectedColor = [UIColor darkGrayColor];
+}
+
 - (void)setSelected:(BOOL)selected // deselect other buttons
 {
     if(toNextRadioButton)
@@ -32,6 +38,17 @@
                 [next setSelected:NO];
             next = next->toNextRadioButton;
         }
+    }
+    
+    if(selected && self.selectedColor)
+    {
+        self.unselectedColor = self.color;
+        self.color = self.selectedColor;
+    }
+    else
+    {
+        if(self.unselectedColor)
+            self.color = self.unselectedColor;
     }
     
     [super setSelected:selected];
