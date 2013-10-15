@@ -13,9 +13,12 @@ XCode5 will ask you "Share working copy?" Answer: NO (not sure what this means t
 #Using BootstrapButton in your project
 
 In InterfaceBuilder change the class-name of your Button from UIButton to BButton. That's it.
-To programatically use the buttons check out the demo XCode project git@github.com:katzlbt/iOSBootstrapButtonDemo.git
+In InterfaceBuilder change the class-name of your Button from UIButton to BRadioButton. Then connect toNextRadioButton outlets in the storyboard in a circle (linked list) so the button may deselect others. Then set the selectedColor in the KV-coding list to blue or red and use the radio button. No code needed.
+To programatically use the buttons (you don't need to do that at all) check out the demo XCode project git@github.com:katzlbt/iOSBootstrapButtonDemo.git
 
 ### Changes
+* Added BRadioButton
+* Removed unnecessary methods, cleanup
 * Refactored to be able to use Icomoon Font or any other Font in Buttons.
 * Switched from Arrays to memory friendier #define structure.
 * Deprecated NSString extensions
