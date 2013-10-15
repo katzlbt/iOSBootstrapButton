@@ -83,7 +83,7 @@ UIColor* BButton_ColorDanger = nil;
 + (UIColor*)colorDefault;
 {
     if(BButton_ColorDefault == nil)
-        BButton_ColorDefault = [UIColor colorWithRed:0.85f green:0.85f blue:0.85f alpha:1.00f];
+        BButton_ColorDefault = [UIColor colorWithRed:0.75f green:0.75f blue:0.75f alpha:1.00f];
     
     return BButton_ColorDefault;
 }
@@ -467,7 +467,7 @@ UIColor* BButton_ColorDanger = nil;
         sum = (components[0] + components[1] + components[2]) / 3.0f;
     }
     
-    return (sum > 0.8f);
+    return (sum > 0.6f);
 }
 
 @end
