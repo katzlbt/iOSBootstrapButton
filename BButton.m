@@ -392,7 +392,7 @@ UIColor* BButton_ColorDanger = nil;
     Classmethods help to simplyfy compiling with ARC, (less files) */
 + (UIColor *)lightenColor:(UIColor*)c withValue:(CGFloat)value
 {
-    int totalComponents = CGColorGetNumberOfComponents(c.CGColor);
+    unsigned long totalComponents = CGColorGetNumberOfComponents(c.CGColor);
     BOOL isGreyscale = (totalComponents == 2) ? YES : NO;
     
     CGFloat *oldComponents = (CGFloat *)CGColorGetComponents(c.CGColor);
@@ -423,7 +423,7 @@ UIColor* BButton_ColorDanger = nil;
 
 + (UIColor *)darkenColor:(UIColor*)c withValue:(CGFloat)value
 {
-    int totalComponents = CGColorGetNumberOfComponents(c.CGColor);
+    unsigned long totalComponents = CGColorGetNumberOfComponents(c.CGColor);
     BOOL isGreyscale = (totalComponents == 2) ? YES : NO;
     
     CGFloat *oldComponents = (CGFloat *)CGColorGetComponents(c.CGColor);
@@ -454,7 +454,7 @@ UIColor* BButton_ColorDanger = nil;
 
 + (BOOL)isLightColor:(UIColor*)c
 {
-    int totalComponents = CGColorGetNumberOfComponents(c.CGColor);
+    unsigned long totalComponents = CGColorGetNumberOfComponents(c.CGColor);
     BOOL isGreyscale = (totalComponents == 2) ? YES : NO;
     
     CGFloat *components = (CGFloat *)CGColorGetComponents(c.CGColor);
