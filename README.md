@@ -1,20 +1,20 @@
-#BButton 2.0 Forked
+#BButton 2.0 Forked (iOS7, iOS8, 64bit)
 
 BButton is a subclass of UIButton that looks like the [Twitter Bootstrap 2.3.1](http://twitter.github.com/bootstrap) buttons.
 BBIconLabel is a new class to display Icons without button. With a single method call it can be set up to convert entered text in InterfaceBuilder to Icons and scale them. No need to write code.
 For a working demo see this project: git@github.com:katzlbt/iOSBootstrapButtonDemo.git
-iOS7 compatible for those who do not like the new iOS7 design. 
+iOS7, iOS8 compatible for those who do not like the new design (yuk!). 
 
 #Adding BootstrapButton to your project
 
-git submodule add git@github.com:katzlbt/iOSBootstrapButton.git BootstrapButton
+```git submodule add git@github.com:katzlbt/iOSBootstrapButton.git``` BootstrapButton
 XCode5 will ask you "Share working copy?" Answer: NO (not sure what this means though)
 
 #Using BootstrapButton in your project
 
-In InterfaceBuilder change the class-name of your Button from UIButton to BButton. That's it.
+__In InterfaceBuilder change the class-name of your Button from UIButton to BButton. That's it.__
 In InterfaceBuilder change the class-name of your Button from UIButton to BRadioButton. Then connect toNextRadioButton outlets in the storyboard in a circle (linked list) so the button may deselect others. Then set the selectedColor in the KV-coding list to blue or red and use the radio button. No code needed.
-To programatically use the buttons (you don't need to do that at all) check out the demo XCode project git@github.com:katzlbt/iOSBootstrapButtonDemo.git
+To programatically use the buttons (you don't need to do that at all) check out the demo XCode project http://github.com/katzlbt/iOSBootstrapButtonDemo that contains this project as subproject.
 
 ### Changes
 * Added BRadioButton
@@ -66,16 +66,6 @@ Create a `UILabel` and change its class to `BBIconLabel` Then add a method to tr
 **See the included demo project `BButtonDemo.xcodeproj`**
 
 **See `FontAwesomeIcons.html` for list of icons**
-
-## Apps Using This Control
-
-[Hemoglobe](http://bit.ly/hemoglobeapp)
-
-[iPaint uPaint](http://bit.ly/ipupappstr)
-
-[Audiotrip](https://itunes.apple.com/us/app/audiotrip/id569634193?mt=8&ign-mpt=uo%3D4)
-
-*[Contact me](mailto:me@mathieubolard.com) to have your app listed here.*
 
 ##[BButton](https://github.com/mattlawer/BButton) License
 
