@@ -26,6 +26,8 @@
 
 - (void)awakeFromNib
 {
+    [super awakeFromNib];
+    
     if(self.selectedColor == nil) // use key value coding in storyboard to set this color!
         self.selectedColor = [UIColor darkGrayColor];
 }
