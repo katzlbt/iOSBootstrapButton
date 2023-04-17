@@ -85,7 +85,7 @@ extern UIColor* BButton_ColorDanger;
 */
 
 #ifdef DEBUG
-void BButton_listFonts(); // Add yourfont.ttf to application-info.plist with key "Fonts provided by application"
+void BButton_listFonts(void); // Add yourfont.ttf to application-info.plist with key "Fonts provided by application"
 #endif
 
 @interface BButton : UIButton

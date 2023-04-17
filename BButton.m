@@ -473,7 +473,7 @@ UIColor* BButton_ColorDanger = nil;
 @end
 
 #ifdef DEBUG
-void BButton_listFonts() // Add yourfont.ttf to application-info.plist with key "Fonts provided by application" then check with this function if it is included
+void BButton_listFonts(void) // Add yourfont.ttf to application-info.plist with key "Fonts provided by application" then check with this function if it is included
 {
     for (NSString *familyName in [UIFont familyNames]) {
         for (NSString *fontName in [UIFont fontNamesForFamilyName:familyName]) {
